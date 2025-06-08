@@ -14,6 +14,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup(
        {
           { import = "whitefolke.plugins" },
+          { import = "whitefolke.plugins.lsp" },
        },
         {
         checker = {
