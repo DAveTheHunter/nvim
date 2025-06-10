@@ -157,7 +157,9 @@ return {
             capabilities = capabilities,
             root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
         })
-
+         lspconfig.gopls.setup({
+            capabilities = capabilities,
+         })
         -- ts_ls (replaces tsserver)
         lspconfig.ts_ls.setup({
             capabilities = capabilities,
@@ -175,21 +177,23 @@ return {
             },
         })
         -- clangd setup
+        -- lspconfig.clangd.setup({
+        --     capabilities = capabilities,
+        --     root_dir = function(fname)
+        --         local util = lspconfig.util
+        --         return util.root_pattern("compile_commands.json", ".git", "Makefile")(fname)
+        --     end,
+        --     single_file_support = true,
+        --     init_options = {
+        --         clangdFile = {
+        --             enableConfig = true,
+        --         },
+        --         compilationDatabasePath = nil, -- Set to specific path if needed, e.g., "build"
+        --     },
+        -- })
         lspconfig.clangd.setup({
             capabilities = capabilities,
-            root_dir = function(fname)
-                local util = lspconfig.util
-                return util.root_pattern("compile_commands.json", ".git", "Makefile")(fname)
-            end,
-            single_file_support = true,
-            init_options = {
-                clangdFile = {
-                    enableConfig = true,
-                },
-                compilationDatabasePath = nil, -- Set to specific path if needed, e.g., "build"
-            },
         })
-
         -- HACK: If using Blink.cmp Configure all LSPs here
 
         -- ( comment the ones in mason )
