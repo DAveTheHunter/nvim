@@ -28,7 +28,10 @@ return {
 
 
     vim.keymap.set('n', '<leader>jf', builtin.find_files, { desc = 'Telescope find files' })
-    vim.keymap.set('n', '<leader>gr', builtin.git_files, { desc = 'Telescope live grep' })
+    vim.keymap.set('n', '<leader>gt', builtin.git_files, { desc = 'Telescope live grep' })
+    vim.keymap.set('n', '<leader>gr', function()
+        builtin.grep_string({search = vim.fn.input("> ")})
+    end, { })
     vim.keymap.set("n", "<leader>ths", "<cmd>Telescope themes<CR>", { noremap = true, silent = true, desc = "Theme Switcher" })
 end
 }
