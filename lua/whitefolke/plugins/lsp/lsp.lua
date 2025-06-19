@@ -194,6 +194,12 @@ return {
         lspconfig.clangd.setup({
             capabilities = capabilities,
         })
+        lspconfig.bashls.setup({
+            capabilities = capabilities,
+        })
+        lspconfig.pyright.setup({
+            capabilities = capabilities,
+        })
         -- HACK: If using Blink.cmp Configure all LSPs here
 
         -- ( comment the ones in mason )

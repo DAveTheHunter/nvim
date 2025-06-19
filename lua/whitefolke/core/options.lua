@@ -39,4 +39,8 @@ vim.opt.updatetime = 50
 vim.opt.mouse = "a"
 vim.g.editorconfig = true
 
-
+vim.api.nvim_create_autocmd('TextYankPost', {
+    callback = function()
+        vim.highlight.on_yank()
+    end,
+})

@@ -19,7 +19,7 @@ return {
         skip_confirm_for_simple_edits = true,
     })
    --the key maps 
-   vim.keymap.set("n", "<leader>e", vim.cmd.Oil, {desc = "open oil"})
+   vim.keymap.set("n", "<leader>er", vim.cmd.Oil, {desc = "open oil"})
    vim.keymap.set("n", "<leader>r", require("oil").toggle_float, {desc = "open oil in a floating mode"})
 
 
