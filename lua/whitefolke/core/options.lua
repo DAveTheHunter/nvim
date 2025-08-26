@@ -29,16 +29,15 @@ vim.opt.signcolumn = "yes"
 
 
 vim.opt.backspace = {"start","eol", "indent"}
-
 vim.opt.splitright = true
 vim.opt.splitbelow= true
 vim.opt.clipboard = "unnamedplus"
+vim.o.paste = false
 
-vim.opt.hlsearch = true
-vim.opt.updatetime = 50
-vim.opt.mouse = "a"
-vim.g.editorconfig = true
-
+-- vim.opt.hlsearch = true
+-- vim.opt.updatetime = 50
+-- vim.opt.mouse = "a"
+-- vim.g.editorconfig = true  
 vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function()
         vim.highlight.on_yank()

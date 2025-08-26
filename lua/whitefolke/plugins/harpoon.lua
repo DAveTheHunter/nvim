@@ -40,7 +40,7 @@ return {
 		vim.keymap.set("n", "<leader>a", function()
 			harpoon:list():add()
 		end, { desc = "Harpoon add file" })
-		vim.keymap.set("n", "<leader>tu", function()
+		vim.keymap.set("n", "<leader>ta", function()
 			harpoon.ui:toggle_quick_menu(harpoon:list())
 		end)
 

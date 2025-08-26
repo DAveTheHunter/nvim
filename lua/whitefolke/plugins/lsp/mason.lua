@@ -36,8 +36,8 @@ return {
             -- servers for mason to install
             ensure_installed = {
                 "lua_ls",
-                -- "ts_ls",-- currently using a ts plugin
-                "clangd",
+                "ts_ls",-- currently using a ts plugin
+                -- "clangd",
                 "html",
                 "cssls",
                 "tailwindcss",
@@ -55,10 +55,10 @@ return {
             ensure_installed = {
                 "prettier", -- prettier formatter
                 "stylua",   -- lua formatter
-                "isort",    -- python formatter
-                "pylint",
-                "clangd",
-                "denols",
+                -- "isort",    -- python formatter
+                -- "pylint",
+                -- "clangd",
+                -- "denols",
                 -- { 'eslint_d', version = '13.1.2' },
             },
 
