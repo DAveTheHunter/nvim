@@ -20,6 +20,8 @@ vim.lsp.config("lua_ls", {
 })
 
 vim.lsp.enable({
+    "python-lsp-server",
+    "pyright",
     "lua_ls",
     "marksman",
     "gopls",

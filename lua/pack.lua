@@ -7,8 +7,10 @@ vim.pack.add({
     "https://github.com/nvim-lua/plenary.nvim",
     "https://github.com/rebelot/kanagawa.nvim",
     "https://github.com/rose-pine/neovim",
+    "https://github.com/nvim-lualine/lualine.nvim",
     -- "https//github.com/trope/vim-fugitive",
     "https://github.com/rafamadriz/friendly-snippets",
+    "https://github.com/nvim-tree/nvim-web-devicons",
     "https://github.com/mason-org/mason.nvim",
     "https://github.com/neovim/nvim-lspconfig",
     { src = "https://github.com/nvim-treesitter/nvim-treesitter", branch = "main" },
@@ -99,14 +101,21 @@ vim.keymap.set('n', '<leader>jh', telescope.help_tags, { desc = 'Telescope help 
 
 local MiniCompletions = require("mini.completion")
 
+-- require("mini.completion").setup({
+--     lsp_completion = {
+--         auto_setup = true,
+--         process_items = function(items,base)
+--             return MiniCompletions.default_process_items(items,base, {
+--                 filtersort = "fuzzy",
+--             })
+--         end,
+--     }
+-- })
+--
+--- mini completions --- 
 require("mini.completion").setup({
     lsp_completion = {
         auto_setup = true,
-        process_items = function(items,base)
-            return MiniCompletions.default_process_items(items,base, {
-                filtersort = "fuzzy",
-            })
-        end,
     }
 })
 
@@ -116,9 +125,26 @@ MiniSnippets.setup({
     snippets = {
         MiniSnippets.gen_loader.from_lang(), -- loads friendly-snippets
     },
+    -- diable empty tabstop indicators
+    expand = {
+        insert = function(snippet)
+            MiniSnippets.default_insert(snippet, { empty_tabstop = "" })
+        end,
+    },
 })
 
 MiniSnippets.start_lsp_server({ match = false })
+
+vim.api.nvim_create_autocmd("ColorScheme", {
+    callback = function()
+        vim.api.nvim_set_hl(0,"MiniSnippetsCurrent", {})
+        vim.api.nvim_set_hl(0,"MiniSnippetsCurrentReplace", {})
+        vim.api.nvim_set_hl(0,"MiniSnippetsFinal", {})
+        vim.api.nvim_set_hl(0,"MiniSnippetsUnvisited", {})
+        vim.api.nvim_set_hl(0,"MiniSnippetVisited", {})
+    end,
+})
+
 
 -- treesitter
 
@@ -138,3 +164,91 @@ require("lsp")
 -- vim.keymap.set("n", "<leader>gd", "<cmd>Gvdiffsplit<CR>", { desc = "Git diff split", })
 --
 
+-- lua line 
+
+local lualine = require("lualine")
+
+local colors = {
+    color0 = "#092236",
+    color1 = "#ff5874",
+    color2 = "#c3ccdc",
+    color3 = "#1c1e26",
+    color6 = "#a1aab8",
+    color7 = "#828697",
+    color8 = "#ae81ff",
+}
+
+local my_lualine_theme = {
+    replace = {
+        a = { fg = colors.color0, bg = colors.color1, gui = "bold" },
+        b = { fg = colors.color2, bg = colors.color3 },
+    },
+    inactive = {
+        a = { fg = colors.color6, bg = colors.color3, gui = "bold" },
+        b = { fg = colors.color6, bg = colors.color3 },
+        c = { fg = colors.color6, bg = colors.color3 },
+    },
+    normal = {
+        a = { fg = colors.color0, bg = colors.color7, gui = "bold" },
+        b = { fg = colors.color2, bg = colors.color3 },
+        c = { fg = colors.color2, bg = colors.color3 },
+    },
+    visual = {
+        a = { fg = colors.color0, bg = colors.color8, gui = "bold" },
+        b = { fg = colors.color2, bg = colors.color3 },
+    },
+    insert = {
+        a = { fg = colors.color0, bg = colors.color2, gui = "bold" },
+        b = { fg = colors.color2, bg = colors.color3 },
+    },
+}
+
+lualine.setup({
+    options = {
+        theme = my_lualine_theme,
+        icons_enabled = true,
+        component_separators = { left = "|", right = "|" },
+        section_separators = { left = "|", right = "" },
+    },
+
+    sections = {
+        lualine_a = {
+            {
+                "mode",
+                fmt = function(str)
+                    return " " .. str
+                end,
+            },
+        },
+
+        lualine_b = {
+            {
+                "branch",
+                icon = { "", color = { fg = "#A6D4DE" } },
+            },
+        },
+
+        lualine_c = {
+            {
+                "diff",
+                colored = true,
+                symbols = {
+                    added = " ",
+                    modified = " ",
+                    removed = " ",
+                },
+            },
+            {
+                "filename",
+                file_status = true,
+                path = 0,
+            },
+        },
+
+        lualine_x = {
+            { "encoding" },
+            { "fileformat" },
+            { "filetype" },
+        },
+    },
+})
